@@ -43,7 +43,7 @@ function Event(props) {
                 <Card.Text>
                     {participant} participants
                 </Card.Text>
-                <Button  onClick={likeEvent} variant="primary">{like === true?"like":"dislike"}</Button>
+                <Button  onClick={likeEvent} variant="primary">{like === true?"dislike":"like"}</Button>
 
 
                 <Button disabled={ticket === 0} onClick={book} variant="primary">Book an Evenet</Button>

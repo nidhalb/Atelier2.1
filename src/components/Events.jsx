@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import eventList from "../data/events.json";
 import Event from './Event';
+import { Row } from 'react-bootstrap';
 function Events () {
     
     return (<> 
      <h2>Event</h2>
+     <Row>
      {eventList.map((e, i) => {
           return (
             <Event class="d-flex"
@@ -19,6 +21,7 @@ function Events () {
             />
           );
         })}
+        </Row>
      
     </>);
 }
