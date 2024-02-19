@@ -1,15 +1,26 @@
-import React from "react";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useState, useEffect } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import { Link } from 'react-router-dom';
+import eventList from "../data/events.json";
 
-function Event(props) {
-    const [ticket, setTicket] = useState(props.nbTickets);
-    const [participant, setParticipant] = useState(props.nbParticipants);
+
+
+function EventDetails () {
+  const {id} = useParams();
+  const event = eventList.find((e)=> e.name === id)
+  
+  console.log(event);
+  console.log(id);
+    const [ticket, setTicket] = useState(event.nbTickets);
+    const [participant, setParticipant] = useState(event.nbParticipants);
     const [showAlert, setShowAlert] = useState(false);
-    const [like, setLike] = useState(props.like);
+    const [like, setLike] = useState(event.like);
 
     const book = () => {
         setTicket(ticket - 1);
@@ -26,17 +37,17 @@ function Event(props) {
         const timeout = setTimeout(() => setShowAlert(false), 2000);
         return () => clearTimeout(timeout);
     }, [showAlert]);
-    const availableImage = `images/${props.img}`;
-  const soldOutImage = `images/sold_out.png`;
+    const availableImage = `../images/${event.img}`;
+  const soldOutImage = `../images/sold_out.png`;
 
 
     return (
         <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src={ticket === 0 ? soldOutImage : availableImage} />
             <Card.Body>
-                <Card.Title>{props.name}</Card.Title>
+                <Card.Title>{event.name}</Card.Title>
                 <Card.Text>
-                    {props.price} €
+                    {event.price} €
                 </Card.Text>
                 <Card.Text>
                     {ticket} tickets
@@ -48,7 +59,7 @@ function Event(props) {
 
 
                 <Button disabled={ticket === 0} onClick={book} variant="primary">Book an Evenet</Button>
-                <Link to={`/events/${props.name}`} state={props}><Button variant="primary">Show Details</Button></Link>
+                
 
                 <div>
                     {showAlert && (
@@ -62,4 +73,4 @@ function Event(props) {
     );
 }
 
-export default Event;
+export default EventDetails;
